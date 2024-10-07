@@ -14,18 +14,15 @@ const HomePage = () => {
 
 	const [sortType, setSortType] = useState('recent')
 
-	const getUserProfileAndRepos = useCallback(async(username = "BharathiKannanBabu") => {
+	const getUserProfileAndRepos = useCallback(async(username = "BharathikannanBabu") => {
 		setLoading(true)
 		try {
-			const res = await fetch(`http://localhost:5000/api/users/profile/${username}`);
+			const res = await fetch(`/api/users/profile/${username}`);
 			const {repos, userProfile} = await res.json()
 			
 			repos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); //descending, recent first
 			setRepos(repos)
 			setUserProdfile(userProfile)
-			
-			console.log('userProfile', userProfile);
-			console.log('Repos', repos);
 		} catch (error) {
 			toast.error(error.message)
 		} finally {
